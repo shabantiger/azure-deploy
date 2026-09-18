@@ -1,0 +1,91 @@
+name: Azure Deploy
+description: Auto-detect stack, provision Azure infrastructure with Bicep, and deploy to Azure Container Apps. One workflow addition = full production Azure deployment.
+author: azure-deploy-action
+
+branding:
+  icon: upload-cloud
+  color: blue
+
+inputs:
+  azure-credentials:
+    description: Azure service principal JSON (from az ad sp create-for-rbac)
+    required: true
+  app-name:
+    description: Application name prefix (used for all Azure resource names)
+    required: true
+  resource-group:
+    description: Azure resource group name
+    required: false
+    default: ''
+  location:
+    description: Azure region
+    required: false
+    default: eastus
+  stack:
+    description: Application stack (node | python | static | fullstack | auto)
+    required: false
+    default: auto
+  env-vars:
+    description: Environment variables as KEY=VALUE pairs (newline-separated)
+    required: false
+    default: ''
+  postgres:
+    description: Provision PostgreSQL Flexible Server
+    required: false
+    default: 'false'
+  postgres-sku:
+    description: PostgreSQL SKU name
+    required: false
+    default: Burstable_B1ms
+  cpu:
+    description: Container CPU allocation (vCPUs)
+    required: false
+    default: '0.5'
+  memory:
+    description: Container memory allocation
+    required: false
+    default: 1Gi
+  min-replicas:
+    description: Minimum number of replicas
+    required: false
+    default: '1'
+  max-replicas:
+    description: Maximum number of replicas
+    required: false
+    default: '3'
+  custom-domain:
+    description: Custom domain name for the app
+    required: false
+    default: ''
+  acr-name:
+    description: Azure Container Registry name (auto-generated if not provided)
+    required: false
+    default: ''
+  docker-file:
+    description: Path to Dockerfile (auto-generated if not found)
+    required: false
+    default: Dockerfile
+  environment:
+    description: Deployment environment name
+    required: false
+    default: production
+  notify-slack:
+    description: Slack webhook URL for deployment notifications
+    required: false
+    default: ''
+
+outputs:
+  app-url:
+    description: The URL of the deployed application
+  acr-name:
+    description: The Azure Container Registry name used
+  resource-group:
+    description: The Azure resource group name
+  revision:
+    description: The active Container App revision name
+  deploy-time:
+    description: Deployment timestamp (ISO 8601)
+
+runs:
+  using: node20
+  main: dist/main.js
