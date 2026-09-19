@@ -1,6 +1,6 @@
-name: Azure Deploy
-description: Auto-detect stack, provision Azure infrastructure with Bicep, and deploy to Azure Container Apps. One workflow addition = full production Azure deployment.
-author: azure-deploy-action
+name: Deploy to Azure Container Apps
+description: Auto-detect stack, provision Bicep infrastructure, and deploy to Azure Container Apps. Zero Azure portal required.
+author: shabantiger
 
 branding:
   icon: upload-cloud
